@@ -1,7 +1,0 @@
-[package]
-name = "aalto-bsc-thesis"
-version = "0.1.0"
-entrypoint = "lib.typ"
-authors = ["Matias Zwinger"]
-license = "MIT"
-description = "Aalto school of science bachelor's thesis template."
