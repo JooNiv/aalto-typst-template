@@ -1,1 +1,3 @@
-Use this template by cloning this repo and editing main.typ
+Report / Thesis template for Aalto University.
+
+Use this template by cloning this repo and editing main.typ 

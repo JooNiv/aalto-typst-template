@@ -3,7 +3,7 @@
 
 #let lang-data = toml("lang.toml")
 
-#let l(key) = linguify(key, from: lang-data)
+#let l(key) = linguify(key, from: lang-data )
 
 #let styling(it) = {
   import "@preview/abbr:0.1.1"
@@ -18,27 +18,33 @@
   it
 }
 
-#let color-header = {
+#let color-header(
+  title: "Title",
+  subtitle: "Subtitle",
+  author: "Author",
+  report-type: "Report",
+  program: "Program",
+) = {
   set page(fill: rgb(253, 99, 96))
   set text(weight: 1000, size: 10pt)
   [
-    #l("program")
+    #program
   ]
   text()[
     \ \ \
   ]
   align()[
     #text(size: 35pt, white)[
-      Automatic Cut Finding
+      #title
       \ \
     ]
     #text(size: 12pt, white)[
-      Automatic Cut Finding For Quantum Circuit Knitting
+      #subtitle
       \
       \
       #line(length: 100%, stroke: white)
       \
-      Joonas Nivala
+      #author
     ]]
 
   align(bottom)[
@@ -55,9 +61,9 @@
               columns: (10pt, 1fr),
               rows: 35pt,
               line(end: (0%, 90%), stroke: white),
-              align(top)[
+              align(horizon)[
                 #text(white, size: 10pt, hyphenate: false)[
-                  Internship Report
+                  #report-type
                 ]
               ],
             )
@@ -68,11 +74,11 @@
   ]
 }
 
-#let header = {
+#let header(program: "Program") = {
   [
     #l("aalto")\
     #l("sci")\
-    #l("program")
+    #program
   ]
 }
 
@@ -89,6 +95,8 @@
   abbreviations: (),
   date: datetime.today(),
   subtitle: "SubTitle",
+  report-type: "Report",
+  program: "Program",
 ) = {
   let date = (
     date.display("[day padding:none]. ") + l(lower(date.display("[month repr:long]"))) + date.display(" [year]")
@@ -102,11 +110,11 @@
   },
 )
 
-  color-header
+  color-header(title: title, subtitle: subtitle, author: author, report-type: report-type)
 
   pagebreak()
 
-  header
+  header(program: program)
 
   text()[
     \ \ \ \ \ \ \

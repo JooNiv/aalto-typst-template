@@ -3,37 +3,58 @@
 #show: styling
 
 #intro(
-  title: "Automatic Cut Finding",
-  author: "Joonas Nivala",
-  major: "Textile engineering",
-  code: "SCI1234",
-  teacher: "PHYS prof, another prof",
-  supervisor: "Mikael Johansson",
+  title: "Title of Paper",
+  author: "Teemu Teekkari",
+  major: "Major",
+  code: "Code1234",
+  teacher: "Dr. Professor",
+  supervisor: "Super Visor",
   summary: lorem(100),
-  keywords: ("Quantun", "circuit knittint", "circuit cutting", "circuit partitioning", "distributed quantum computing"),
+  keywords: ("keywords", "for", "paper"),
   language: "English",
   abbreviations: (),
   date: datetime.today(),
-  subtitle: "Automatic Cut Finding For Quantum Circuit Knitting"
+  subtitle: "Subtitle of Paper",
+  report-type: "Report",
+  program: "Program"
 )
 
 #counter(page).update(1) 
 #set page(numbering: "1. ")
 
+#set page(margin: (
+  top: 3cm,
+  bottom: 2.5cm,
+  left: 5cm,
+))
+#set text(size: 12pt, spacing: 150%)
+
 = Introduction
+#lorem(100)
+
+== Section
+#lorem(100)
+
+#pagebreak()
 
 = Foo
 
-= Bar
-
-== Baz
+#pagebreak()
 
 = Conclusion
+
+#pagebreak()
+
 
 #end(
   "bibfile.bib",
   [
-    
+    = First Appendix
+    #lorem(100),
+    #pagebreak(),
+  
+    = Second Appendix
+    #lorem(100),
   ],
 )
 
