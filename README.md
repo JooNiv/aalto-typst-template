@@ -1,4 +1,4 @@
-Report / Thesis template for Aalto University.
+Report / Thesis template for Aalto University made with Typst.
 
 Use this template by cloning this repo and editing main.typ and lang.toml.
 
