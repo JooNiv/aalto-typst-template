@@ -1,7 +1,7 @@
 #import "@preview/abbr:0.1.1"
 #import "@preview/linguify:0.4.1": *
 
-#let lang-data = toml("lang.toml")
+#let lang-data = toml("../lang.toml")
 
 #let l(key) = linguify(key, from: lang-data )
 
