@@ -62,7 +62,7 @@
 
   set page(
     number-align: right,
-    numbering: "1"
+    numbering: "1",
   )
 
   set heading(numbering: "1.1")
@@ -239,42 +239,70 @@
     \ \ \
   ]
 
-  strong(l("author"))
-  linebreak()
-  author
-  line(length: 100%, stroke: black)
+  block(spacing: 0.5em)[
+    #strong(l("author"))
+  ]
+  block(spacing: 0.5em)[
+    #author
+  ]
+  block(spacing: 0.5em)[
+    #line(length: 100%, stroke: black)
+  ]
 
-  strong(l("title"))
-  linebreak()
-  title
-  line(length: 100%, stroke: black)
+  block(spacing: 0.5em)[
+    #strong(l("title"))
+  ]
+  block(spacing: 0.5em)[
+    #title
+  ]
+  block(spacing: 0.5em)[
+    #line(length: 100%, stroke: black)
+  ]
 
-  strong(l("subtitle"))
-  linebreak()
-  subtitle
-  line(length: 100%, stroke: black)
+  block(spacing: 0.5em)[
+    #strong(l("subtitle"))
+  ]
+  block(spacing: 0.5em)[
+    #subtitle
+  ]
+  block(spacing: 0.5em)[
+    #line(length: 100%, stroke: black)
+  ]
 
-  strong(l("main_teacher")) + "  " + teacher
-  line(length: 100%, stroke: black)
+  block(spacing: 0.5em)[
+    #strong(l("main_teacher")) #h(1em) #teacher
+  ]
 
-  strong(l("supervisor")) + "  " + supervisor
-  line(length: 100%, stroke: black)
+  block(spacing: 0.5em)[
+    #line(length: 100%, stroke: black)
+  ]
 
-  box(width: 100%)[
-    #set par(justify: false)
-    #text()[
-      #strong(l("level")) #l("type")
-    ] #h(2fr)
-    #text()[
-      #strong(l("date")) #date
-    ] #h(2fr)
-    #text()[
-      #strong(l("nof_pages")) #context [ #counter(page).final().at(0) ]
-    ] #h(2fr)
-    #text()[
-      #strong(l("language")) #l("languagename")
+  block(spacing: 0.5em)[
+    #strong(l("supervisor")) #h(1em) #supervisor
+  ]
+
+  block(spacing: 0.5em)[
+    #line(length: 100%, stroke: black)
+  ]
+
+  block(spacing: 0.5em)[
+    #box(width: 100%)[
+      #set par(justify: false)
+      #text()[
+        #strong(l("level")) #l("type")
+      ] #h(2fr)
+      #text()[
+        #strong(l("date")) #date
+      ] #h(2fr)
+      #text()[
+        #strong(l("nof_pages")) #context [ #counter(page).final().at(0) ]
+      ] #h(2fr)
+      #text()[
+        #strong(l("language")) #l("languagename")
+      ]
     ]
   ]
+
 
   line(length: 100%, stroke: black)
 
