@@ -1,0 +1,14 @@
+[package]
+name = "report-aalto"
+version = "0.1.0"
+entrypoint = "lib/lib.typ"
+authors = ["Joonas Nivala <@JooNiv>"]
+license = "MIT"
+description = "Aalto University paper / thesis template"
+keywords = ["report", "thesis", "paper", "Aalto University", "template"]
+categories = ["paper", "report", "thesis", "template"]
+
+[template]
+path = "."
+entrypoint = "main.typ"
+thumbnail = "assets/image.png"
