@@ -3,17 +3,54 @@
 
 #let lang-data = toml("../lang.toml")
 
-#let l(key) = linguify(key, from: lang-data )
+#let l(key) = linguify(key, from: lang-data)
 
-#let styling(it) = {
+#let styling-headers(it) = {
   import "@preview/abbr:0.1.1"
 
   set text(font: "DejaVu Serif", 12pt)
 
   set par(leading: 0.8em, justify: true)
 
-  set heading(numbering: "1.")
   show heading: set block(below: 1.5em, above: 2em)
+
+  set page(
+    margin: (
+      top: 2cm,
+      bottom: 2cm,
+      left: 3cm,
+    ),
+  )
+
+  it
+}
+
+#let styling-main(it) = {
+  import "@preview/abbr:0.1.1"
+
+  set text(font: "DejaVu Serif", 12pt)
+
+  set page(numbering: "1.")
+
+  set heading(numbering: "1.1")
+  show heading: it => [
+    #if it.level == 1 [
+      #block([#it])
+      \ \ \ \ \
+    ] else [
+      #block([#it])
+    ]
+
+  ]
+
+  set page(
+    margin: (
+      top: 3cm,
+      bottom: 2.5cm,
+      left: 5cm,
+    ),
+  )
+  set text(size: 12pt, spacing: 150%)
 
   it
 }
@@ -22,13 +59,16 @@
   title: "Title",
   subtitle: "Subtitle",
   author: "Author",
-  report-type: "Report",
-  program: "Program",
+  language: "English",
 ) = {
   set page(fill: rgb(253, 99, 96))
   set text(weight: 1000, size: 10pt)
+
+  let a = lower(language.slice(0, 2))
+  set text(lang: a)
+
   [
-    #program
+    #l("program")
   ]
   text()[
     \ \ \
@@ -39,12 +79,12 @@
       \ \
     ]
     #text(size: 12pt, white)[
-      #subtitle
+      #subtitle\
       \
       \
       #line(length: 100%, stroke: white)
       \
-      #author
+      #author\
     ]]
 
   align(bottom)[
@@ -63,7 +103,7 @@
               line(end: (0%, 90%), stroke: white),
               align(horizon)[
                 #text(white, size: 10pt, hyphenate: false)[
-                  #report-type
+                  #l("type")
                 ]
               ],
             )
@@ -72,49 +112,25 @@
       ],
     )
   ]
+  pagebreak()
+
+  counter(page).update(1)
 }
 
-#let header(program: "Program") = {
+#let header(
+  title: "Title",
+  subtitle: "Subtitle",
+  author: "Author",
+  language: "English",
+) = {
+  let a = lower(language.slice(0, 2))
+  set text(lang: a)
+
   [
     #l("aalto")\
     #l("sci")\
-    #program
+    #l("program")
   ]
-}
-
-#let intro(
-  title: "Title",
-  author: "Jaakko Turpela",
-  major: "Major",
-  code: "SCI1234",
-  teacher: "Teacher",
-  supervisor: "Supervisor",
-  summary: lorem(100),
-  keywords: (),
-  language: "English",
-  abbreviations: (),
-  date: datetime.today(),
-  subtitle: "SubTitle",
-  report-type: "Report",
-  program: "Program",
-) = {
-  let date = (
-    date.display("[day padding:none]. ") + l(lower(date.display("[month repr:long]"))) + date.display(" [year]")
-  )
-
-  set page(
-  numbering: (..numbers) => {
-    if numbers.pos().at(0) != 1 {
-      numbering("i", numbers.pos().at(0))
-    }
-  },
-)
-
-  color-header(title: title, subtitle: subtitle, author: author, report-type: report-type)
-
-  pagebreak()
-
-  header(program: program)
 
   text()[
     \ \ \ \ \ \ \
@@ -129,7 +145,7 @@
         ]
         \ \ \ \
         #text(size: 13pt)[
-          #subtitle
+          #subtitle\
         ]
         \ \ \ \
         #text(size: 13pt)[
@@ -138,8 +154,35 @@
       ]
     )
   ]
-
   pagebreak()
+}
+
+#let intro(
+  title: "Title",
+  author: "Jaakko Turpela",
+  teacher: "Teacher",
+  supervisor: "Supervisor",
+  keywords: (),
+  language: "English",
+  abbreviations: (),
+  date: datetime.today(),
+  subtitle: "SubTitle",
+) = {
+  let date = (
+    date.display("[day padding:none]. ") + l(lower(date.display("[month repr:long]"))) + date.display(" [year]")
+  )
+
+  let a = lower(language.slice(0, 2))
+  set text(lang: a)
+
+  set page(
+    numbering: (..numbers) => {
+      if numbers.pos().at(0) != 1 {
+        numbering("i", numbers.pos().at(0))
+      }
+    },
+  )
+
 
   grid(
     columns: (50%, 50%),
@@ -147,7 +190,7 @@
     image("logo-86626-1.png", width: 70pt),
     align(horizon)[
       #text(size: 12pt)[
-        *Abstract*
+        *#l("summary")*
       ]
     ],
   )
@@ -176,7 +219,7 @@
     \ \ \
   ]
   table(
-    columns: (25%, 75%),
+    columns: (30%, 70%),
     [#l("author")], author,
     [#l("title")], title,
     [#l("subtitle")], subtitle,
@@ -184,21 +227,26 @@
     [#l("nof_pages")], context [ #counter(page).final().at(0) ],
     [#l("main_teacher")], teacher,
     [#l("supervisor")], supervisor,
-    [#l("keywords")], keywords.join(", "),
     [#l("language")], language,
   )
 
   text(size: 13pt)[
-    \ *Abstract* \
+    \ *#l("summary")* \
   ]
 
-  summary
+  l("abstract")
+
+  align(bottom)[
+    #text(size: 13pt)[
+      \ *#l("keywords"):*
+    ]
+    #keywords.join(", ")
+    #line(length: 100%, stroke: black)
+  ]
 
   pagebreak()
 
-  outline()
-  
-  pagebreak()
+  counter(page).update(1)
 }
 
 #let end(bibfile, appendix) = {
@@ -208,7 +256,7 @@
     show "vsk.": "vol."
     bib
   }
-  let dd = "../" 
+  let dd = "../"
   let ddbib = dd + bibfile
   bibliography(ddbib, style: "ieee-aalto.csl")
 

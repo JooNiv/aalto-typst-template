@@ -1,39 +1,64 @@
 #import "lib/lib.typ": *
 
-#show: styling
+#let title = "Title of Paper"
+#let subtitle = "Subtitle of Paper"
+#let author = "Teemu Teekkari"
+#let language = "English"
+#let teacher = "Dr. Professor"
+#let supervisor = "Super Visor"
+#let keywords = ("keywords", "for", "paper")
+#let date = datetime.today()
+
+#let title-fi = "Työn otsikko"
+#let subtitle-fi = "Työn alaotsikko"
+#let keywords-fi = ("avainsanat", "tälle", "paperille")
+
+#color-header(title: title, subtitle: subtitle, author: author, language: language)
+
+#show: styling-headers
+
+#header(title: title, subtitle: subtitle, author: author, language: language)
 
 #intro(
-  title: "Title of Paper",
-  author: "Teemu Teekkari",
-  major: "Major",
-  code: "Code1234",
-  teacher: "Dr. Professor",
-  supervisor: "Super Visor",
-  summary: lorem(100),
-  keywords: ("keywords", "for", "paper"),
+  title: title,
+  author: author,
+  teacher: teacher,
+  supervisor: supervisor,
+  keywords: keywords,
   language: "English",
   abbreviations: (),
-  date: datetime.today(),
-  subtitle: "Subtitle of Paper",
-  report-type: "Report",
-  program: "Program"
+  date: date,
+  subtitle: subtitle,
 )
 
-#counter(page).update(1) 
-#set page(numbering: "1. ")
+#intro(
+  title: title-fi,
+  author: author,
+  teacher: teacher,
+  supervisor: supervisor,
+  keywords: keywords-fi,
+  language: "Finnish",
+  abbreviations: (),
+  date: date,
+  subtitle: subtitle-fi,
+)
 
-#set page(margin: (
-  top: 3cm,
-  bottom: 2.5cm,
-  left: 5cm,
-))
-#set text(size: 12pt, spacing: 150%)
+#outline()
+
+#pagebreak()
+
+#show: styling-main
+
 
 = Introduction
+
 #lorem(100)
 
 == Section
-#lorem(100)
+#lorem(50)
+
+=== Subsection
+#lorem(10)
 
 #pagebreak()
 
@@ -52,7 +77,7 @@
     = First Appendix
     #lorem(100),
     #pagebreak(),
-  
+
     = Second Appendix
     #lorem(100),
   ],
