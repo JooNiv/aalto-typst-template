@@ -8,7 +8,7 @@
 #let styling-headers(it) = {
   import "@preview/abbr:0.1.1"
 
-  set text(font: "DejaVu Serif", 12pt)
+  set text(font: "DejaVu Serif", 11pt)
 
   set par(leading: 0.8em, justify: true)
 
@@ -25,7 +25,7 @@
   set page(
     numbering: (..numbers) => {
       if numbers.pos().at(0) != 1 {
-        numbering("i", numbers.pos().at(0))
+        align(right)[#numbering("i", numbers.pos().at(0))]
       }
     },
   )
@@ -60,7 +60,11 @@
   counter(page).update(1)
   set text(font: "DejaVu Serif", 12pt)
 
-  set page(numbering: "1.")
+  set page(
+    numbering: (..numbers) => {
+      align(right)[#numbering("1", numbers.pos().at(0))]
+    },
+  )
 
   set heading(numbering: "1.1")
   show heading: it => [
@@ -81,6 +85,22 @@
     ),
   )
   set text(size: 12pt, spacing: 150%)
+
+  let current-chapter-title() = context {
+    let headings = query(heading.where(level: 1).after(here()))
+    if headings == () { panic("At least one heading must be defined.") }
+    headings.first().body
+  }
+
+  set page(
+    header: [
+      #align(right)[
+        #text(size: 9pt)[
+          #current-chapter-title()
+        ]
+      ]
+    ],
+  )
 
   it
 }
@@ -216,44 +236,51 @@
       ]
     ],
   )
-
-  show table.cell: it => {
-    if it.x == 0 and it.colspan == 1 {
-      strong(it)
-    } else {
-      it
-    }
-  }
-
-  set table(
-    stroke: (x, y) => (
-      left: if x == 0 {
-        0.5pt
-      } else {
-        0pt
-      },
-      right: 0.5pt,
-      top: 0.5pt,
-      bottom: 0.5pt,
-    ),
-  )
   text()[
     \ \ \
   ]
-  table(
-    columns: (30%, 70%),
-    [#l("author")], author,
-    [#l("title")], title,
-    [#l("subtitle")], subtitle,
-    [#l("date")], date,
-    [#l("nof_pages")], context [ #counter(page).final().at(0) ],
-    [#l("main_teacher")], teacher,
-    [#l("supervisor")], supervisor,
-    [#l("language")], language,
-  )
+
+  strong(l("author"))
+  linebreak()
+  author
+  line(length: 100%, stroke: black)
+
+  strong(l("title"))
+  linebreak()
+  title
+  line(length: 100%, stroke: black)
+
+  strong(l("subtitle"))
+  linebreak()
+  subtitle
+  line(length: 100%, stroke: black)
+
+  strong(l("main_teacher")) + "  " + teacher
+  line(length: 100%, stroke: black)
+
+  strong(l("supervisor")) + "  " + supervisor
+  line(length: 100%, stroke: black)
+
+  box(width: 100%)[
+    #set par(justify: false)
+    #text()[
+      #strong(l("level")) #l("type")
+    ] #h(2fr)
+    #text()[
+      #strong(l("date")) #date
+    ] #h(2fr)
+    #text()[
+      #strong(l("nof_pages")) #context [ #counter(page).final().at(0) ]
+    ] #h(2fr)
+    #text()[
+      #strong(l("language")) #l("languagename")
+    ]
+  ]
+
+  line(length: 100%, stroke: black)
 
   text(size: 13pt)[
-    \ *#l("summary")* \
+    \ \ \ *#l("summary")* \
   ]
 
   l("abstract")
@@ -283,7 +310,7 @@
   pagebreak(weak: true)
 
   counter(heading).update(0)
-  set heading(numbering: "A")
+  set heading(numbering: "A.1")
 
   appendix
 }
