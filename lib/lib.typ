@@ -61,9 +61,8 @@
   set text(font: "DejaVu Serif", 12pt)
 
   set page(
-    numbering: (..numbers) => {
-      align(right)[#numbering("1", numbers.pos().at(0))]
-    },
+    number-align: right,
+    numbering: "1"
   )
 
   set heading(numbering: "1.1")
