@@ -22,12 +22,42 @@
     ),
   )
 
+  set page(
+    numbering: (..numbers) => {
+      if numbers.pos().at(0) != 1 {
+        numbering("i", numbers.pos().at(0))
+      }
+    },
+  )
+
+  show outline: it => {
+    show heading: set block(below: 10em)
+    it
+  }
+
+  show outline.entry: it => link(
+    it.element.location(),
+    it.indented(it.prefix(), it.inner()),
+  )
+
+
+  show outline.entry.where(level: 1): it => {
+    v(12pt)
+    text(weight: "bold")[#it]
+  }
+
+  show outline.entry.where(level: 2): it => {
+    v(12pt, weak: true)
+    text(weight: "medium")[#it]
+  }
+
+
   it
 }
 
 #let styling-main(it) = {
   import "@preview/abbr:0.1.1"
-
+  counter(page).update(1)
   set text(font: "DejaVu Serif", 12pt)
 
   set page(numbering: "1.")
@@ -35,10 +65,10 @@
   set heading(numbering: "1.1")
   show heading: it => [
     #if it.level == 1 [
-      #block([#it])
-      \ \ \ \ \
+      #set block(below: 10em)
+      #it
     ] else [
-      #block([#it])
+      #it
     ]
 
   ]
@@ -175,14 +205,6 @@
   let a = lower(language.slice(0, 2))
   set text(lang: a)
 
-  set page(
-    numbering: (..numbers) => {
-      if numbers.pos().at(0) != 1 {
-        numbering("i", numbers.pos().at(0))
-      }
-    },
-  )
-
 
   grid(
     columns: (50%, 50%),
@@ -245,8 +267,6 @@
   ]
 
   pagebreak()
-
-  counter(page).update(1)
 }
 
 #let end(bibfile, appendix) = {
