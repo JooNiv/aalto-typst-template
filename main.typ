@@ -49,7 +49,6 @@
 
 #show: styling-main
 
-
 = Introduction
 
 #lorem(100)
@@ -76,6 +75,9 @@
   [
     = First Appendix
     #lorem(100),
+
+    == Subsection of First Appendix
+
     #pagebreak(),
 
     = Second Appendix
