@@ -118,7 +118,7 @@
   language: "English",
 ) = {
   set page(fill: rgb(253, 99, 96))
-  set text(weight: 1000, size: 10pt)
+  set text(weight: 1000, size: 10pt, font: "DejaVu Serif")
 
   let a = lower(language.slice(0, 2))
   set text(lang: a)
