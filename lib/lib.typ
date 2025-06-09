@@ -57,7 +57,6 @@
 
 #let styling-main(it) = {
   import "@preview/abbr:0.1.1"
-  counter(page).update(1)
   set text(font: "DejaVu Serif", 12pt)
 
   set page(
@@ -101,7 +100,7 @@
       ]
     ],
   )
-
+  counter(page).update(1)
   it
 }
 
@@ -205,6 +204,12 @@
     )
   ]
   pagebreak()
+  //heading.where(level: 1).after(here())
+  let check-if-contents-exists() = context {
+    let headings = query(numbering.after(here())).first()
+    if headings == () { panic("At least one heading must be defined.") }
+    headings.first().body
+  }
 }
 
 #let intro(
