@@ -31,6 +31,13 @@
   )
 
   show outline: it => {
+    set page(
+      margin: (
+        top: 3cm,
+        bottom: 2.5cm,
+        left: 5cm,
+      ),
+    )
     show heading: set block(below: 10em)
     it
   }
