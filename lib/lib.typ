@@ -68,6 +68,7 @@
   set heading(numbering: "1.1")
   show heading: it => [
     #if it.level == 1 [
+      #pagebreak()
       #set block(below: 10em)
       #it
     ] else [

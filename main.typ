@@ -45,7 +45,6 @@
 
 #outline()
 
-#pagebreak()
 
 #show: styling-main
 
@@ -59,15 +58,9 @@
 === Subsection
 #lorem(10)
 
-#pagebreak()
-
 = Foo
 
-#pagebreak()
-
 = Conclusion
-
-#pagebreak()
 
 
 #end(
@@ -77,8 +70,6 @@
     #lorem(100),
 
     == Subsection of First Appendix
-
-    #pagebreak(),
 
     = Second Appendix
     #lorem(100),
