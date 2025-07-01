@@ -93,9 +93,15 @@
   set text(size: 12pt, spacing: 150%)
 
   let current-chapter-title() = context {
+    let all-headings = query(heading.where().after(here()))
     let headings = query(heading.where(level: 1).after(here()))
     if headings == () { panic("At least one heading must be defined.") }
-    headings.first().body
+    if all-headings.at(0) == headings.at(0) {
+      return headings.first().body
+    }
+    else {
+      return query(heading.where(level: 1).before(here())).last().body
+    }
   }
 
   set page(
