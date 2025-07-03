@@ -118,6 +118,7 @@
 
   show figure: it => {
     set block(below: 2em)
+    set text(size: 10pt, spacing: 150%)
     it
   }
 
