@@ -115,6 +115,12 @@
   )
   counter(page).update(1)
   it
+
+  show figure: it => {
+    set block(below: 2em)
+    it
+  }
+
 }
 
 #let color-header(
