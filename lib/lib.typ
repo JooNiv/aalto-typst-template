@@ -358,7 +358,7 @@
   }
   let dd = "../"
   let ddbib = dd + bibfile
-  bibliography(ddbib, style: "ieee-aalto.csl")
+  bibliography(ddbib, style: "ieee-aalto.csl", full: true)
 
   pagebreak(weak: true)
 
