@@ -63,7 +63,6 @@
 }
 
 #let styling-main(it) = {
-  import "@preview/abbr:0.1.1"
   set text(font: "DejaVu Serif", 12pt)
 
   set page(
@@ -93,14 +92,14 @@
   set text(size: 12pt, spacing: 150%)
 
   let current-chapter-title() = context {
-    let all-headings = query(heading.where().after(here()))
     let headings = query(heading.where(level: 1).after(here()))
     if headings == () { panic("At least one heading must be defined.") }
-    if all-headings.at(0) == headings.at(0) {
+    if headings.first().location().page() == here().page() {
       return headings.first().body
-    }
-    else {
-      return query(heading.where(level: 1).before(here())).last().body
+    } else {
+      let before = query(heading.where(level: 1).before(here()))
+      if before == () { return headings.first().body }
+      return before.last().body
     }
   }
 
@@ -124,14 +123,26 @@
 
 }
 
+#let colors = (
+  red: rgb("#FD6360"),
+  yellow: rgb("#F7E159"),
+  blue: rgb("#46A5FF"),
+)
+
 #let color-header(
   title: "Title",
   subtitle: "Subtitle",
   author: "Author",
   language: "English",
+  color: colors.red,
+  dark: false,
 ) = {
-  set page(fill: rgb(253, 99, 96))
-  set text(weight: 1000, size: 10pt, font: "DejaVu Serif")
+
+  let fontcolor = if dark { black } else { white }
+  let logo = if dark { "logo-black.png" } else { "logo-white.png" }
+
+  set page(fill: color)
+  set text(weight: 1000, size: 10pt, font: "DejaVu Serif", fill: fontcolor)
 
   let a = lower(language.slice(0, 2))
   set text(lang: a)
@@ -143,15 +154,15 @@
     \ \ \
   ]
   align()[
-    #text(size: 35pt, white)[
+    #text(size: 35pt, fill: fontcolor)[
       #title
       \ \
     ]
-    #text(size: 12pt, white)[
+    #text(size: 12pt, fill: fontcolor)[
       #subtitle\
       \
       \
-      #line(length: 100%, stroke: white)
+      #line(length: 100%, stroke: fontcolor)
       \
       #author\
     ]]
@@ -161,7 +172,7 @@
       columns: (1fr, 1fr),
       rows: 100pt,
       rect(stroke: none)[
-        #image("logo-86630-1.png", width: 100pt)
+        #image(logo, width: 100pt)
       ],
       align(right)[
         #rect(stroke: none, width: 100pt, height: 100pt)[
@@ -169,9 +180,9 @@
             #grid(
               columns: (10pt, 1fr),
               rows: 35pt,
-              line(end: (0%, 90%), stroke: white),
+              line(end: (0%, 90%), stroke: fontcolor),
               align(horizon)[
-                #text(white, size: 10pt, hyphenate: false)[
+                #text(size: 10pt, hyphenate: false)[
                   #l("type")
                 ]
               ],
@@ -249,12 +260,12 @@
 
   let a = lower(language.slice(0, 2))
   set text(lang: a)
-
+  let logo = "logo-black.png"
 
   grid(
     columns: (50%, 50%),
     align: (left, right),
-    image("logo-86626-1.png", width: 70pt),
+    image(logo, width: 70pt),
     align(horizon)[
       #text(size: 12pt)[
         *#l("summary")*

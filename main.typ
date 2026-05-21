@@ -13,7 +13,8 @@
 #let subtitle-fi = "Työn alaotsikko"
 #let keywords-fi = ("avainsanat", "tälle", "paperille")
 
-#color-header(title: title, subtitle: subtitle, author: author, language: language)
+#color-header(title: title, subtitle: subtitle, author: author, language: language, dark: false,
+color: colors.red)
 
 #show: styling-headers
 
